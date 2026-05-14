@@ -37,3 +37,32 @@ pthread_mutex_t lock;
 cache_element* head;
 int cache_size;
 
+int main(int argc,char*argv[]){
+    int client_sockId,client_len;
+    struct sockaddr_in server_addr,client_addr;
+    sem_init(&semaphore,0,MAX_CLIENTS);
+    pthread_mutex_init(&lock,NULL);
+    if(argc == 2){
+        port_number = atoi(argv[1]);
+    }else{
+        printf("Too few arguments\n");
+        exit(1);
+    }
+    printf("Starting proxy server on port %d\n",port_number);
+    proxy_socketId = socket(AF_INET,SOCK_STREAM,0);
+
+    if(proxy_socketId < 0){
+        perror("Failed to create a socket\n");
+        exit(1);
+    }
+    int reuse = 1;
+    if(setsockopt(proxy_socketId, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) < 0){
+        perror("Failed to set socket options\n");
+        exit(1);        
+    }
+
+    bzero(&server_addr,sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    server_addr.sin_port = htons(port_number);
+}
