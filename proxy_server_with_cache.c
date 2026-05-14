@@ -6,9 +6,9 @@
 #include<pthread.h>
 #include<semaphore.h>
 #include<unistd.h>  
-// #include<arpa/inet.h>
-// #include<sys/socket.h> 
-// #include<netinet/in.h>  
+#include<arpa/inet.h>
+#include<sys/socket.h> 
+#include<netinet/in.h>  
 #include<sys/types.h>
 #include<fcntl.h>
 #include<errno.h>
@@ -33,3 +33,7 @@ int proxy_socketId;
 pthread_t tid[MAX_CLIENTS];
 sem_t semaphore;
 pthread_mutex_t lock;
+
+cache_element* head;
+int cache_size;
+
