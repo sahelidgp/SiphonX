@@ -1,0 +1,5 @@
+# Ignore compiled binaries
+server
+*.out
+*.o
+*.exe
